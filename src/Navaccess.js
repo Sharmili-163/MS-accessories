@@ -1,12 +1,12 @@
 import React from 'react'
 import './Navbar.css'
-const Navaccess = (props) => {
+const Navaccess = ({ image, label}) => {
   return (
     <div>
         <div className="imagecontainer">
             <div className='images'>
-              <img src={props.ms} alt=""/>
-              <h3>{props.shop}</h3>
+              <img src={image} alt={label}/>
+              <h3>{label}</h3>
             </div>
         </div>
     </div>

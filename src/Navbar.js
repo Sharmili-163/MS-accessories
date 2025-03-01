@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Navbar.css";
+import axios from 'axios';
 import mslogo from './assests/mslogo..jpeg';
 import search_icon_light from './assests/search-w.png';
 import search_icon_dark from './assests/search-b.png';
@@ -10,7 +11,17 @@ import cosmetics from './cosmetics.jpeg';
 import earrings from './earrings.jpeg';
 import Navaccess from './Navaccess';
 const Navbar = () => {
-  return (
+  const [productData, setProductData] = useState([]);
+  async function getDetails() {
+    await axios.get("https://dummyjson.com/products").then((res) => {
+      setProductData(res.data.products);
+    });
+  }
+  useEffect(() => {
+    getDetails();
+    }, []);
+  
+    return (
     <div>
     <nav className='navbar'>
       <img src={mslogo} alt="" className='logo' />
@@ -27,10 +38,16 @@ const Navbar = () => {
       </div>
       <img src={toogle_light} alt="" className='toggle-icon'/>
     </nav>
-    <div>
-      <Navaccess ms={bangle} shop="fancy bangles"/>
-      <Navaccess ms={cosmetics} shop="branded cosmetics"/>
-      <Navaccess ms={earrings} shop="trending earrings"/>
+    <div className='imagecontainer'>
+      {productData.map((product) => (
+        <productData
+        key={product.id}
+        image={product.thumbnail}
+        label={product.title}
+        />
+      ))}
+      
+      
     </div>
   </div> 
   );
